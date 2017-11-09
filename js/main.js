@@ -18,11 +18,19 @@ dbx.filesListFolder({path: ''})
 //     })
 
 function uploadFile() {
+    dbx.filesListFolder({path: '/'})
+        .then(function(response) {
+            // console.log("tjoho");
+            console.log(response);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
     // var ACCESS_TOKEN = document.getElementById('access-token').value;
     // var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
     var fileInput = document.getElementById('file-upload');
     var file = fileInput.files[0];
-    dbx.filesUpload({path: '/' + file.name, contents: file})
+    dbx.filesUpload({path: '/' + "lallal", contents: file})
         .then(function(response) {
             var results = document.getElementById('results');
             results.appendChild(document.createTextNode('File uploaded!'));

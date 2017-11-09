@@ -2,11 +2,24 @@
     "assocs": [
         {
             "name": "Nättraby Allmäna Idrottssällskap",
-            "pass": "banan123"
+            "pass": "banan123",
+            "uploaded": false,
+            "diciplin": [
+                "Tumbling",
+                "Trampett",
+                "Fristående"
+            ]
         },
         {
             "name": "Karlskrona GF",
-            "pass": "banan123"
+            "pass": "banan123",
+            "diciplin": [
+                "Trampett",
+                "Fristående",
+                "Tumbling",
+
+
+            ]
         },
         {
             "name": "Dackegymnasterna",
@@ -32,5 +45,5 @@
             "name": "Västerviks GF",
             "pass": "banan123"
         }
-    ]
+    ],
 }

@@ -6,6 +6,7 @@
 //         $('#assoc').append($('<option>').text(value["name"]).attr('value', value["name"]));
 //     });
 // }
+var json = {};
 
 function populateSelectAssoc(data) {
     var assocs = [];
@@ -28,14 +29,58 @@ function listStarts(test) {
     console.log(test.value);
 }
 
+// function getCSVasJSON() {
+//     var json = {};
+//     $.get( "../data.csv", function( data ) {
+//         var lines=data.split("\n");
+//         var result = [];
+//         var headers=lines[0].split(",");
+//
+//         for(var i=1;i<lines.length;i++){
+//             var obj = {};
+//             var currentline=lines[i].split(",");
+//
+//             for(var j=0;j<headers.length;j++){
+//                 obj[headers[j]] = currentline[j];
+//             }
+//
+//             result.push(obj);
+//         }
+//         json = JSON.stringify(result); //JSON
+//         console.log( "Load was performed via function." );
+//         return json;
+//     });
+// }
+
 function fillTable(assoc) {
-    console.log(assoc);
+    var counter = 0;
+    var table = "<table class='table table-hover table-bordered'>";
+    table += "<thead class='thead-dark'><tr>";
+    table += "<th>Tävling / klass</th><th>#</th><th>Start</th><th>Diciplin</th><th></th></tr></thead>";
+    table += "<tbody>";
+
+    $.each($.parseJSON(json), function(key, value) {
+        if (value.Förening == assoc) {
+            table += "<tr id='" + counter + "'>";
+            table += "<td>" + value['Tävling / klass'] + "</td>";
+            table += "<td>" + value['#'] + "</td>";
+            table += "<td>" + value['Start'] + "</td>";
+            table += "<td>" + value['Disciplin'] + "</td>";
+            table += "<td><input class='form-control-file file-upload' aria-describedby='fileHelp' type='file'></td>";
+            table += "</tr>";
+        }
+        counter++;
+    });
+
+    table += "</tbody></table>";
+
+    $('#table').append(table);
 }
 
 // $.getJSON( "json/assoc.json", function( data ) {
 //     success: populateSelect(data);
 // });
-var json = {};
+
 $.get( "../data.csv", function( data ) {
     var lines=data.split("\n");
     var result = [];
@@ -56,17 +101,36 @@ $.get( "../data.csv", function( data ) {
     console.log( "Load was performed." );
 });
 
+function uploadFile() {
+    var dbx = new Dropbox({ accessToken: '3Ft6zMrDcIAAAAAAAAAAC7HvwLGDk-kZtRwpG3GJttLqXa3-oBNi6IYWCxX4Jqoh' });
+    dbx.filesListFolder({path: ''})
+        .then(function(response) {
+            console.log(response);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 
-// var csv = $.get("../data.csv");
-// function csvJSON(csv){
-//     console.log(csv);
-//
-//
-//   }
-//
-//   //return result; //JavaScript object
-// }
+    var fileInputs = document.getElementsByClassName('file-upload');
 
-// var json2 = csvJSON(csv);
-// console.log("tjho");
-// console.log(json2);
+    for (var i = 0; i < fileInputs.length; i++) {
+
+        if (fileInputs[i].files.length > 0) {
+
+            var file = null;
+
+            file = fileInputs[i].files[0];
+
+            dbx.filesUpload({path: '/' + file.name, contents: file})
+                .then(function(response) {
+                    var results = document.getElementById('results');
+                    results.innerHTML += "<h4>File: " + response.name + " uploaded!<br></h4>";
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+            }
+        }
+    return false;
+}

@@ -22,14 +22,14 @@ if (isset($_SESSION["loggedin"])) {
     <script type="text/javascript" src="js/assoc.js"></script>
 
     <link rel="stylesheet" href="style/style.css">
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             fillTable($("#chosen_assoc")[0].value);
         });
-    </script>
+    </script> -->
 
 </head>
-<body>
+<body onload="fillTable($('#chosen_assoc')[0].value)">
 
 <div class="container">
     <div class="row">
@@ -46,18 +46,45 @@ if (isset($_SESSION["loggedin"])) {
                 <label for="chosen_assoc">Inloggad som:</label>
                 <input type="text" class="form-control" id="chosen_assoc" value="<?=$_SESSION['assoc'];?>" readonly="readonly">
             </div>
+        </div>
+        <div class="col-md-2">
+            <form onSubmit="return uploadFile()">
+                <div class="form-group">
+                    <!-- <label for="file-upload">Välj .mp3</label> -->
+                    <!-- <input class="form-control-file" aria-describedby="fileHelp" type="file" id="file-upload" disabled="true"> -->
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" id="table">
 
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-lg btn-success uploadButton" type="submit">Ladda upp</button>
+        </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <!-- <button class="btn btn-lg btn-success uploadButton" type="submit">Ladda upp</button> -->
+            </div>
+            <h2 id="results"></h2>
+        </div>
+        <div class="col-md-2"></form>
+        </div>
+    </div>
 
-
-
-        <form onSubmit="return uploadFile()">
+        <!-- <form onSubmit="return uploadFile()">
             <div class="form-group">
                 <label for="file-upload">Välj .mp3</label>
-                <input class="form-control-file" aria-describedby="fileHelp" type="file" id="file-upload" disabled="true">
-            </div>
-            <div class="form-group">
-                <button class="btn btn-lg btn-success" type="submit" disabled="true">Ladda upp</button>
-            </div>
+                <input class="form-control-file" aria-describedby="fileHelp" type="file" id="file-upload">
+            </div> -->
+            <!-- <div class="form-group">
+                <button class="btn btn-lg btn-success" type="submit">Ladda upp</button>
+            </div> -->
 
         </form>
         <div class="col-md-2"></div>
@@ -65,7 +92,7 @@ if (isset($_SESSION["loggedin"])) {
     <div id='my_file_output'></div>
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-6"><h2 id="results"></h2></div>
+        <div class="col-md-6" id="results"></div>
         <div class="col-md-2"></div>
     </div>
 </div>
@@ -80,7 +107,6 @@ if (isset($_SESSION["loggedin"])) {
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script> -->
 <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- <script type="text/javascript" src="js/assoc.js"></script> -->
 <script>
     $(document).ready(function() {
         $.ajaxSetup({ cache: false });
