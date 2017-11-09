@@ -1,0 +1,36 @@
+{
+    "assocs": [
+        {
+            "name": "Nättraby Allmäna Idrottssällskap",
+            "pass": "banan123"
+        },
+        {
+            "name": "Karlskrona GF",
+            "pass": "banan123"
+        },
+        {
+            "name": "Dackegymnasterna",
+            "pass": "banan123"
+        },
+        {
+            "name": "Ronnebygymnasterna",
+            "pass": "banan123"
+        },
+        {
+            "name": "Gymnastikföreningen Gympalätt",
+            "pass": "banan123"
+        },
+        {
+            "name": "Rödebygymnasterna",
+            "pass": "banan123"
+        },
+        {
+            "name": "GF Öjabytruppen",
+            "pass": "banan123"
+        },
+        {
+            "name": "Västerviks GF",
+            "pass": "banan123"
+        }
+    ]
+}
