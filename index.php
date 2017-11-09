@@ -1,35 +1,53 @@
-<?php
-$title = "Slackify";
-include("includes/header.php");
-// include("includes/functions.php");
-?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
-<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-<script type="text/javascript" src="js/assoc.js"></script>
+<?php include("includes/config.php"); ?>
+
+<!doctype html>
+<html>
+<head>
+    <title>Log in</title>
+    <!-- <meta charset="utf-8"> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='shortcut icon' href='img/favicon-16x16.png' type='image/x-icon'/ >
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.csv.js"></script>
+    <script type="text/javascript" src="js/assoc.js"></script>
+
+    <link rel="stylesheet" href="style/style.css">
+
+</head>
+<body>
 
 <div class="container">
     <div class="row">
-        <!-- <img src="img/lessonqueue.svg" style="width: 100%"> -->
-        <!-- <div class="jumbotron center"> -->
-            <h1 class="title">Logga in</h1>
-        <!-- </div> -->
-
+        <?php if (isset($_SESSION["flash"])): ?>
+                <?php echo "<h2 class='title'>" . $_SESSION["flash"] . "</h2>"; unset($_SESSION["flash"]); ?>
+            <?php else: ?>
+                <h2 class="title">Lösenord:</h2>
+        <?php endif; ?>
     </div>
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <div class="form-group">
-                <label for="assoc">Välj förening</label>
-                <select class="form-control" id="assoc" onchange="listStarts(this)">
+            <form action="verify.php" method="POST">
+                <div class="form-group">
+                    <label for="assoc">Välj förening</label>
+                    <select class="form-control" id="assoc" name="assoc"></select>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Lösenord:</label>
+                    <input type="hidden" name="hp" value="human">
+                    <input type="password" name="pass" id="pass"> => <button class="btn btn-sm" type="submit">Verifiera</button>
+                </div>
 
-                </select>
-            </div>
+            </form>
 
 
 
 
-        <form onSubmit="return uploadFile()">
+
+        <!-- <form onSubmit="return uploadFile()">
             <div class="form-group">
                 <label for="file-upload">Välj .mp3</label>
                 <input class="form-control-file" aria-describedby="fileHelp" type="file" id="file-upload" disabled="true">
@@ -38,7 +56,7 @@ include("includes/header.php");
                 <button class="btn btn-lg btn-success" type="submit" disabled="true">Ladda upp</button>
             </div>
 
-        </form>
+        </form> -->
         <div class="col-md-2"></div>
     </div>
     <div id='my_file_output'></div>
