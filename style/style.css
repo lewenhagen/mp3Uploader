@@ -2,16 +2,24 @@
     font-family: "dtm-sans";
     src: url("font/DTM-Sans.otf") format("opentype");
 }*/
-
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
 body {
     /*background-color: #DCE602;*/
-    font-family: Rockwell, serif;
+    /*font-family: Rockwell, serif;*/
     overflow-x: hidden;
     /*color: white;*/
 }
 
 .title {
     text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 52px;
+}
+
+.logo {
+    margin: 0 auto;
+    width: 300px;
+    display: block;
 }
 /*#file-upload {
     color: white;

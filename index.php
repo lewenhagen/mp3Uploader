@@ -3,28 +3,70 @@
 <!doctype html>
 <html>
 <head>
-    <title>Log in</title>
+    <title>Slackify</title>
     <!-- <meta charset="utf-8"> -->
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='shortcut icon' href='img/favicon-16x16.png' type='image/x-icon'/ >
-    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.csv.js"></script>
-    <script type="text/javascript" src="js/assoc.js"></script>
+    <!-- <script type="text/javascript" src="js/jquery.csv.js"></script> -->
+    <!-- <script type="text/javascript" src="js/assoc.js"></script> -->
 
     <link rel="stylesheet" href="style/style.css">
+    <script type="text/javascript">
+        function initJSON() {
+            var json = {};
+            $.get( "../data.csv", function( data ) {
+                var lines=data.split("\n");
+                var result = [];
+                var headers=lines[0].split(",");
 
+                for(var i=1;i<lines.length;i++){
+                    var obj = {};
+                    var currentline=lines[i].split(",");
+
+                    for(var j=0;j<headers.length;j++){
+                        obj[headers[j]] = currentline[j];
+                    }
+
+                    result.push(obj);
+                }
+                json = JSON.stringify(result); //JSON
+                window.localStorage.setItem("data", json);
+                populateSelectAssoc(json);
+                console.log( "Load was performed." );
+            });
+
+        }
+
+        function populateSelectAssoc(data) {
+            var assocs = [];
+            $.each($.parseJSON(data), function(key,value) {
+                if (assocs.indexOf(value.Förening) == -1 && value.Förening != undefined) {
+                    assocs.push(value.Förening);
+                }
+            });
+            // $('#assoc').append($('<option>').text("Välj i listan...").attr('value', "Ingen förening vald. Vänligen gå tillbaka."));
+            $.each(assocs, function(i, value) {
+                $('#assoc').append($('<option>').text(value).attr('value', value));
+            });
+            // console.log(assocs);
+
+        }
+
+    </script>
 </head>
-<body>
+<body onload="initJSON()">
 
 <div class="container">
+    <img class="logo" src="img/slackify_logo.png" alt="logo">
     <div class="row">
         <?php if (isset($_SESSION["flash"])): ?>
                 <?php echo "<h2 class='title'>" . $_SESSION["flash"] . "</h2>"; unset($_SESSION["flash"]); ?>
             <?php else: ?>
-                <h2 class="title">Lösenord:</h2>
+                <h2 class="title">Slackify</h2>
         <?php endif; ?>
     </div>
     <div class="row">
