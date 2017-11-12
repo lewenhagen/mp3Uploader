@@ -1,13 +1,7 @@
-/*@font-face {
-    font-family: "dtm-sans";
-    src: url("font/DTM-Sans.otf") format("opentype");
-}*/
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
+
 body {
-    /*background-color: #DCE602;*/
-    /*font-family: Rockwell, serif;*/
     overflow-x: hidden;
-    /*color: white;*/
 }
 
 .title {
@@ -16,32 +10,19 @@ body {
     font-size: 52px;
 }
 
+.btn:hover{
+    background-color: #ddd;
+}
+
 .logo {
     margin: 0 auto;
     width: 300px;
     display: block;
 }
-/*#file-upload {
-    color: white;
-}
-
-.form-control-file {
-    color: white;
-}*/
 
 .jumbotron {
-    /*background-color: #DCE6F2;*/
     text-align: center;
 }
-/*#counter {
-    margin-left: -25px;
-    margin-top: 10px;
-}
-
-#counter ul {
-    list-style-type: none;
-}*/
-
 
 .btn-lg {
     font-size: 34px;
@@ -51,21 +32,8 @@ body {
    background-color: #A6B6CB;
 }
 
-/*.queueForm {
-    margin-top: 10%;
-}
-
-.startQueueBtn {
-    margin-top: 20px;
-}*/
-
 footer {
-    /*font-family: "dtm-sans";*/
     margin-top: 50px;
-}
-
-th {
-    /*text-align: center;*/
 }
 
 .centerText {

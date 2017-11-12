@@ -18,8 +18,6 @@ if (isset($_SESSION["loggedin"])) {
     <link rel='shortcut icon' href='img/slackify_logo.png' type='image/x-icon'/ >
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="js/jquery.csv.js"></script> -->
-    <!-- <script type="text/javascript" src="js/assoc.js"></script> -->
 
     <link rel="stylesheet" href="style/style.css">
     <script type="text/javascript">
@@ -114,54 +112,18 @@ if (isset($_SESSION["loggedin"])) {
                 <input type="text" class="form-control" id="chosen_assoc" value="<?=$_SESSION['assoc'];?>" readonly="readonly">
             </div>
         </div>
-        <div class="col-md-2">
-            <form onSubmit="return uploadFile()">
-                <div class="form-group">
-                    <!-- <label for="file-upload">Välj .mp3</label> -->
-                    <!-- <input class="form-control-file" aria-describedby="fileHelp" type="file" id="file-upload" disabled="true"> -->
-                </div>
-        </div>
+        <div class="col-md-2"></div>
     </div>
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8" id="table">
-
+            <form onSubmit="return uploadFile()">
         </div>
         <div class="col-md-2">
             <button class="btn btn-lg btn-success uploadButton" type="submit">Ladda upp</button>
         </form>
         <div id="results"></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <div class="form-group">
-                <!-- <button class="btn btn-lg btn-success uploadButton" type="submit">Ladda upp</button> -->
-            </div>
-            <h2 id="results"></h2>
-        </div>
-        <div class="col-md-2"></form>
-        </div>
-    </div>
-
-        <!-- <form onSubmit="return uploadFile()">
-            <div class="form-group">
-                <label for="file-upload">Välj .mp3</label>
-                <input class="form-control-file" aria-describedby="fileHelp" type="file" id="file-upload">
-            </div> -->
-            <!-- <div class="form-group">
-                <button class="btn btn-lg btn-success" type="submit">Ladda upp</button>
-            </div> -->
-
-        </form>
-        <div class="col-md-2"></div>
-    </div>
-    <div id='my_file_output'></div>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-6"></div>
-        <div class="col-md-2"></div>
     </div>
 </div>
 
@@ -172,13 +134,8 @@ if (isset($_SESSION["loggedin"])) {
         <div class="col-md-2"></div>
     </div>
 </footer>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script> -->
+
 <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({ cache: false });
-    });
-</script>
 </body>
 </html>
