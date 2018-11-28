@@ -38,7 +38,7 @@ if (isset($_SESSION["loggedin"])) {
                 if (value.Förening == assoc) {
                     var id = classes[value["Tävling / klass"]] + "_" + value["#"] + "_" + value["Start"] + "_" + value["Disciplin"];
 
-                    table += "<tr id='" + counter + "'>";
+                    table += "<tr id='row-" + counter + "'>";
                     table += "<td>" + value['Tävling / klass'] + "</td>";
                     table += "<td>" + value['#'] + "</td>";
                     table += "<td>" + value['Start'] + "</td>";
@@ -54,8 +54,17 @@ if (isset($_SESSION["loggedin"])) {
             $('#table').append(table);
         }
 
-        function uploadFile() {
+        function markGreen(rows) {
+            for (var i = 0; i < rows.length; i++) {
+                $("#" + rows[i]).css("background-color", "#80ff80");
+            }
+        }
+
+        function uploadFile(event) {
             var dbx = new Dropbox({ accessToken: '3Ft6zMrDcIAAAAAAAAAAC7HvwLGDk-kZtRwpG3GJttLqXa3-oBNi6IYWCxX4Jqoh' });
+            var fileInputs = document.getElementsByClassName('file-upload');
+
+            $("#results").html("<img src='img/ajax-loader.gif'>");
             // dbx.filesListFolder({path: ''})
             //     .then(function(response) {
             //         console.log(response);
@@ -64,29 +73,48 @@ if (isset($_SESSION["loggedin"])) {
             //         console.log(error);
             //     });
 
-            var fileInputs = document.getElementsByClassName('file-upload');
-            var counter = 0;
+            var goodToGo = [];
+            var notAudio = [];
+            var total = 0;
+
+
+            var statusRows = {
+                "id_ok": [],
+                "id_error": []
+            };
+
             for (var i = 0; i < fileInputs.length; i++) {
                 if (fileInputs[i].files.length > 0) {
-                    counter++;
                     if (fileInputs[i].files[0].name.split('.').pop() == "mp3") {
-                        var file = null;
-
-                        file = fileInputs[i].files[0];
-
-                        dbx.filesUpload({path: '/' + fileInputs[i].id.replace(/ /g,"-") + ".mp3", contents: file})
-                            .then(function(response) {
-                                var results = document.getElementById('results');
-                                results.innerHTML = "<h4>" + counter + " file(s) uploaded!</h4>";
-                                // console.log(result.id);
-                            })
-                            .catch(function(error) {
-                                console.error(error);
-                            });
-                        }
+                        goodToGo.push(i);
                     } else {
-                        console.log("Vänligen välj en .mp3-låt.");
+                        statusRows["id_error"].push(fileInputs[i].closest("tr").id);
                     }
+                    total++;
+                }
+            }
+
+            for (var i = 0; i < goodToGo.length; i++) {
+                console.log(i);
+                var fileId = goodToGo[i];
+                var closestTr = fileInputs[fileId].closest("tr");
+                var file = null;
+                file = fileInputs[fileId].files[0];
+                statusRows["id_ok"].push(closestTr.id);
+                dbx.filesUpload({path: '/' + fileInputs[fileId].id.replace(/ /g,"-") + ".mp3", contents: file})
+                    .then(function(response) {
+                        markGreen(statusRows["id_ok"]);
+                        var results = document.getElementById('results');
+                        results.innerHTML = "<h4>" + (i) + "/" + total + " file(s) uploaded!</h4>";
+                    })
+                    .catch(function(error) {
+                        console.error("Error: " + error);
+                    });
+                }
+                console.log(statusRows);
+                for (var i = 0; i < statusRows["id_error"].length; i++) {
+                    $("#" + statusRows["id_error"][i]).css("background-color", "#ff8080");
+                    $("#reason").html("Some files are not .mp3");
                 }
             return false;
         }
@@ -99,7 +127,9 @@ if (isset($_SESSION["loggedin"])) {
     <img class="logo" src="img/slackify_logo.png" alt="logo">
     <div class="row">
         <?php if (isset($_SESSION["flash"])): ?>
-                <?php echo "<h2 class='title'>" . $_SESSION["flash"] . "</h2>"; unset($_SESSION["flash"]); ?>
+                <?php echo "<h2 class='title'>" . $_SESSION["flash"] . "</h2>";
+                unset($_SESSION["flash"]);
+                ?>
             <?php else: ?>
                 <h2 class="title">Välj förening</h2>
         <?php endif; ?>
@@ -123,6 +153,7 @@ if (isset($_SESSION["loggedin"])) {
             <button class="btn btn-lg btn-success uploadButton" type="submit">Ladda upp</button>
         </form>
         <div id="results"></div>
+        <div id="reason"></div>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@
 <head>
     <title>Slackify</title>
     <!-- <meta charset="utf-8"> -->
-    <meta http-equiv="Content-Type" content="text/html; utf-8">
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='shortcut icon' href='img/favicon-16x16.png' type='image/x-icon'/ >
@@ -16,7 +16,7 @@
     <script type="text/javascript">
         function initJSON() {
             var json = {};
-            $.get( "../data.csv", function( data ) {
+            $.get( "data.csv", function( data ) {
                 var lines=data.split("\n");
                 var result = [];
                 var headers=lines[0].split(",");
